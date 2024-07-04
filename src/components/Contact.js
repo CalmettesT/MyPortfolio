@@ -61,7 +61,7 @@ const options = [
 export function ContactSection3() {
   return (
     <section>
-      <div className="relative h-96 w-full mt-[30vh]">
+      <div id="contact" className="relative h-96 w-full mt-[30vh]" data-scroll data-scroll-call="contact" data-scroll-repeat>
         <img
           className="absolute h-full w-full object-cover object-center"
           src="https://www.material-tailwind.com/image/image-5.jpeg"
@@ -96,7 +96,7 @@ export function ContactSection3() {
           </div>
         </div>
       </div>
-      <div className=" h-16"></div>
+      <div className="h-16"></div>
     </section>
   );
 }

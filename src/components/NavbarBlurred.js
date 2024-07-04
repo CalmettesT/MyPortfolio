@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   Collapse,
@@ -7,23 +7,27 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import {
-  Square3Stack3DIcon,
-  UserCircleIcon,
-  PuzzlePieceIcon,
-  CodeBracketSquareIcon,
-  ComputerDesktopIcon,
-  ArrowLeftStartOnRectangleIcon,
+  UserCircleIcon as UserCircleIconSolid,
+  CommandLineIcon as CommandLineIconSolid,
+  EnvelopeIcon as EnvelopeIconSolid,
 } from "@heroicons/react/24/solid";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useLocomotiveScroll } from 'react-locomotive-scroll'
+import {
+  Bars3Icon,
+  XMarkIcon,
+  UserCircleIcon as UserCircleIconOutline,
+  CommandLineIcon as CommandLineIconOutline,
+  EnvelopeIcon as EnvelopeIconOutline,
+} from "@heroicons/react/24/outline";
+import { useLocomotiveScroll } from 'react-locomotive-scroll';
 
-function NavItem({ icon, label, sectionId, scroll }) {
+function NavItem({ icon, solidIcon, label, sectionId, scroll, isActive }) {
   const handleClick = (e) => {
     e.preventDefault();
     if (scroll) {
       scroll.scrollTo(`#${sectionId}`, { offset: -100, duration: 1500, easing: [0.25, 0.0, 0.35, 1.0] });
     }
   };
+
   return (
     <Typography
       as="li"
@@ -32,45 +36,56 @@ function NavItem({ icon, label, sectionId, scroll }) {
       className="flex items-center gap-1.5 p-1 font-normal cursor-pointer"
       onClick={handleClick}
     >
-      {icon}
+      {isActive ? solidIcon : icon}
       {label}
     </Typography>
   );
 }
 
-function NavList({ scroll }) {
+function NavList({ scroll, activeSection }) {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-8">
       <NavItem
-        icon={<UserCircleIcon className="h-5 w-5" />}
+        icon={<UserCircleIconOutline className="h-5 w-5" />}
+        solidIcon={<UserCircleIconSolid className="h-5 w-5 text-gray-900" />}
         label="À Propos"
         sectionId="about"
         scroll={scroll}
+        isActive={activeSection === 'about'}
       />
       <NavItem
-        icon={<ComputerDesktopIcon className="h-5 w-5" />}
-        label="Competences"
-        sectionId="competences"
+        icon={<CommandLineIconOutline className="h-5 w-5" />}
+        solidIcon={<CommandLineIconSolid className="h-5 w-5 text-gray-900" />}
+        label="Compétences"
+        sectionId="project"  // This will trigger 'project' as the section ID
         scroll={scroll}
+        isActive={activeSection === 'project'}
       />
       <NavItem
-        icon={<IconButton className="h-5 w-5" />}
+        icon={<EnvelopeIconOutline className="h-5 w-5" />}
+        solidIcon={<EnvelopeIconSolid className="h-5 w-5 text-gray-900" />}
         label="Contact"
         sectionId="contact"
         scroll={scroll}
+        isActive={activeSection === 'contact'}
       />
     </ul>
   );
 }
 
 export function NavbarBlurred() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const handleOpen = () => setOpen(!open);
   const { scroll } = useLocomotiveScroll();
 
   useEffect(() => {
     if (scroll) {
-      // Force a recalculation of the scroll instance
+      scroll.on('call', (value, way, obj) => {
+        if (way === 'enter') {
+          setActiveSection(value);
+        }
+      });
       scroll.update();
     }
   }, [scroll]);
@@ -88,7 +103,7 @@ export function NavbarBlurred() {
             En cours de Dev
           </Typography>
           <div className="hidden lg:block">
-            <NavList scroll={scroll} />
+            <NavList scroll={scroll} activeSection={activeSection} />
           </div>
           <Button
             size="sm"
@@ -102,7 +117,7 @@ export function NavbarBlurred() {
           </IconButton>
         </div>
         <Collapse open={open}>
-          <NavList scroll={scroll} />
+          <NavList scroll={scroll} activeSection={activeSection} />
           <Button
             size="sm"
             className="mb-2"

@@ -23,7 +23,7 @@ const About = () => {
   }, []);
 
   return (
-    <section id="about" className="about">
+    <section id="about" className="about" data-scroll data-scroll-call="about" data-scroll-repeat>
       <NewSection image={imgMoi} title="À propos" />
       <div className="wrapper-text max-w-full px-6 md:px-20 h-full">
         <div id="about-colonnes" className="colonnes flex flex-wrap mx-auto h-full">

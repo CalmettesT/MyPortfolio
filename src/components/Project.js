@@ -3,11 +3,11 @@ import CardProject from "./CardProject";
 import BPS from "../asset/video/BPS.mp4";
 import SiteChloe from "../asset/video/siteChloe.mp4";
 import NewSection from "./NewSection";
-import imgMoi from "../asset/img/moiV2.jpg"
+import imgMoi from "../asset/img/moiV2.jpg";
 
 export function Project() {
   return (
-    <div id="project" className="p-4 mt-[10vh]">
+    <div id="project" className="p-4 mt-[10vh]" data-scroll data-scroll-call="project" data-scroll-repeat>
       <NewSection image={imgMoi} title="Mes Projets" />
       <div className="grid gap-y-24 gap-x-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-[4vw] pt-[25vh]">
         <CardProject

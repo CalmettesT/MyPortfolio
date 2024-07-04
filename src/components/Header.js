@@ -53,7 +53,7 @@ const Header = () => {
             data-scroll-position="left"
             className="text-[calc(1rem+6vw)] font-bold tracking-wide text-gray-300 text-left font-sans"
           >
-            Développeur
+            Portfolio
           </h2>
         </div>
       </div>
@@ -66,7 +66,7 @@ const Header = () => {
             data-scroll-position="left"
             className="text-[calc(1rem+6vw)] font-bold tracking-wide text-gray-300 text-left font-sans"
           >
-            React JS
+            Work in progress...
           </h2>
         </div>
       </div>
